@@ -1,0 +1,5 @@
+rest风格的webService
+参考：https://blog.csdn.net/shuaicihai/article/details/56037977
+1.通过main方法发布rest风格的服务。（不依赖spring框架进行发布服务）
+
+2.客户端调用类，通过java代码调用发布的服务(crud)。（不依赖spring框架进行服务调用）

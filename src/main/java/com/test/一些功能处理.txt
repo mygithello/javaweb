@@ -1,0 +1,11 @@
+1.编解码使用说明
+2.日期格式比较大小、转换
+3.webService的服务发布
+4.cxf 框架集成webService （通过加载spring配置文件发布服务）
+5.Rest风格 cxf 框架集成webService （不依赖spring框架进行发布服务，调用服务）
+6.Rest风格 cxf 框架集成webService （集成在spring框架，通过项目的运行spring配置文件的方式，发布服务，调用服务）
+
+7.json和对象的相互转换
+8.javamail发送邮件
+9.获取网络上的服务getservice,一些使用方法
+10.通过java代码生成word文档

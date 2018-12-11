@@ -1,0 +1,1 @@
+ 1. SimpleDateFormat simpleDateFormat =new SimpleDateFormat("yyyyMMddHHmmss");

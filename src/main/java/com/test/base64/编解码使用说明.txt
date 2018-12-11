@@ -1,0 +1,11 @@
+1.Apache Commons Codec有提供Base64的编码与解码功能
+{
+<!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.10</version>
+    </dependency>
+}
+2.JDK8提供的java.util套件中Base64的使用
+3.早期在Java上做Base64的编码与解码，会使用到JDK里sun.misc套件下的BASE64Encoder和BASE64Decoder这两个类别

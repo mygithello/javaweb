@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:soap="http://cxf.apache.org/bindings/soap"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						http://cxf.apache.org/bindings/soap
+						http://cxf.apache.org/schemas/configuration/soap.xsd
+						http://cxf.apache.org/jaxws
+						http://cxf.apache.org/schemas/jaxws.xsd
+						http://cxf.apache.org/jaxrs
+						http://cxf.apache.org/schemas/jaxrs.xsd">
+    <!--cxf webService 简单服务发布配置=======demo1_start==============-->
+    <!--<jaxws:server address="/test" serviceClass="com.test.springcxfwebservice.TestCxfWebService">
+        <jaxws:serviceBean>
+            <bean class="com.test.springcxfwebservice.impl.TestCxfWebServiceImpl"></bean>
+        </jaxws:serviceBean>
+    </jaxws:server>-->
+    <!--cxf webService 简单服务发布配置=======demo1_end==============-->
+
+    <!--spring cxf webService 服务发布配置=======demo2_start==============-->
+    <jaxrs:server address="/test2">
+        <jaxrs:serviceBeans>
+            <bean class="com.test.restcxfwebservice.impl.TestRestCxfWebServiceImpl"></bean>
+        </jaxrs:serviceBeans>
+
+       <!-- cxf配置输入输出拦截器-->
+        <!-- 输入日志拦截器 -->
+        <!--<jaxrs:inInterceptors>
+            <ref bean="loggingInInterceptor"/>
+        </jaxrs:inInterceptors>
+        &lt;!&ndash; 输出日志拦截器 &ndash;&gt;
+        <jaxrs:outInterceptors>
+            <ref bean="loggingOutInterceptor" />
+        </jaxrs:outInterceptors>-->
+    </jaxrs:server>
+    <!-- 输入日志拦截器 -->
+    <!--<bean id="loggingInInterceptor" class="org.apache.cxf.interceptor.LoggingInInterceptor"></bean>
+    &lt;!&ndash; 输出日志拦截器 &ndash;&gt;
+    <bean id="loggingOutInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor"></bean>-->
+    <!--参考：https://blog.csdn.net/shuaicihai/article/details/56037977-->
+    <!--spring cxf webService 服务发布配置=======demo2_end==============-->
+
+
+</beans>

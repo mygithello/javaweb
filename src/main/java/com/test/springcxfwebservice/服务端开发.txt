@@ -1,0 +1,10 @@
+环境：导入依赖  spring jar包 + cxf jar包
+
+1.写一个功能 （接口+实现类） 接口上标记@WebService。
+
+2.spring配置文件中进行配置。
+
+3.配置cxf的初始化。
+
+运行项目-->发布成功
+http://localhost:8080/ws/test?wsdl

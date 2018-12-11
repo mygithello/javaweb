@@ -1,0 +1,5 @@
+
+maven 仓库引入第三方jar
+
+mvn install:install-file -Dfile=g:\QRCode.jar -DgroupId=QRCode -DartifactId=QRCode -Dversion=3.0 -Dpackaging=jar
+
