@@ -19,6 +19,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <spring.version>4.3.5.RELEASE</spring.version>
+    <!--虚拟机中私服的地址端口-->
+    <nexus_host_port>192.168.8.134:8081</nexus_host_port>
 
     <cxf.version>3.2.6</cxf.version>
   </properties>
@@ -192,13 +194,11 @@
     <!--生成word文档===========end==============-->
 
     <!--生成二维码===========start=====jar引入到仓库中=========-->
-    <!--mvn install:install-file -Dfile=g:\QRCode.jar -DgroupId=QRCode -DartifactId=QRCode -Dversion=3.0 -Dpackaging=jar-->
-    <!-- https://mvnrepository.com/artifact/org.vaadin.addons/qrcode -->
-    <!--<dependency>
-      <groupId>QRCode</groupId>
-      <artifactId>myQRCode</artifactId>
-      <version>3.0.0</version>
-    </dependency>-->
+    <dependency>
+      <groupId>jyc.thirdparty</groupId>
+      <artifactId>QRCode</artifactId>
+      <version>1.0</version>
+    </dependency>
 
     <!--生成二维码===========end==============-->
 
@@ -217,8 +217,53 @@
     </dependency>
 
     <!--Jedis 配置=======================end==========================-->
+
+
   </dependencies>
 
+  <repositories>
+
+    <!-- 私服的中心仓库============先从本地==》私服==》远程仓库==》===========================================start===========-->
+    <repository>
+      <id>maven-central</id>
+      <name>maven-central</name>
+      <url>http://${nexus_host_port}/repository/maven-central/</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+    <!-- 私服的中心仓库=====jar包存======本地《===私服《==远程仓库《===========================================end============-->
+
+    <!-- 私服的第三方jar仓库=============第三方hosted仓库==========将第三方jar上传到hosted=========================start=================-->
+    <repository>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>public</id>
+      <name>public</name>
+      <url>http://${nexus_host_port}/repository/java_thirdparty_jar/</url>
+    </repository>
+    <!-- 私服的第三方jar仓库====寻找jar顺序===本地==》私服==》远程======不配置私服中心仓库的话，不会同步寻找到的jar不会同步到私服，仅仅放到了本地===end-->
+
+  </repositories>
+
+  <!-- 私服的配置，暂时这样配置=========1======原理待寻============================start===========-->
+  <distributionManagement>
+    <snapshotRepository>
+      <id>nexus</id>
+      <name>Nexus Snapshot</name>
+      <url>http://${nexus_host_port}/repository/maven-snapshots/</url>
+    </snapshotRepository>
+    <site>
+      <id>nexus</id>
+      <name>Nexus Sites</name>
+      <url>dav:http://${nexus_host_port}/repository/maven-snapshots/</url>
+    </site>
+  </distributionManagement>
+  <!-- 私服的配置，暂时这样配置=========2========原理待寻==========================start===========-->
 
 
 
@@ -226,36 +271,41 @@
   <build>
     <finalName>javaweb</finalName>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+
+      <!-- 私服的配置，暂时这样配置=========2======原理待寻============================start===========-->
       <plugins>
+        <!-- 打jar包插件 -->
         <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.0.0</version>
-        </plugin>
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+            <excludes>
+              <exclude>**/*.properties</exclude>
+            </excludes>
+          </configuration>
         </plugin>
+
+        <!-- 打包源码插件 -->
         <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.7.0</version>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.0.1</version>
+          <configuration>
+            <attach>true</attach>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>compile</phase>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.20.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>
+        <!-- 私服的配置，暂时这样配置=========2======原理待寻============================嗯对===========-->
+
+
       </plugins>
     </pluginManagement>
   </build>
